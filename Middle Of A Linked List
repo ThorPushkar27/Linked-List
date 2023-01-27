@@ -1,0 +1,21 @@
+// Slow and fast Pointer Approach.
+
+// One easy approach could be.... Traverse the whole LL and then find the size of LL and claculate half of size and print it
+// O(n) time complexity and O(1) Space complexity.
+
+
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* fast=head;
+        ListNode* slow =head;
+
+        while((fast!=NULL) && (fast->next!=NULL)){
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+        return slow;
+        
+    }
+};
