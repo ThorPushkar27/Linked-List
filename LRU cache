@@ -1,0 +1,48 @@
+//Most Difficult qUESTION done till date.
+
+
+
+class LRUCache {
+public:
+    unordered_map<int,int>m;
+    unordered_map<int,list<int>::iterator >keyPosition;
+    int siz;
+    int cap;
+    list<int>lru;
+    LRUCache(int capacity) {
+        cap=capacity;
+        siz=0;
+        
+    }
+    
+    int get(int key) {
+        if(m.find(key)==m.end()) return -1;
+        list<int>::iterator it=keyPosition[key];
+        lru.erase(it);
+        keyPosition.erase(key);
+        lru.push_front(key);
+        keyPosition[key]=lru.begin();
+        return m[key];
+    }
+    
+    void put(int key, int value) {
+        if(m.find(key)!=m.end()){
+            get(key);
+            m[key]=value;
+
+        }
+        else{
+            if(siz==cap){
+                int lru_1=lru.back();
+                keyPosition.erase(lru_1);
+                m.erase(lru_1);
+                lru.pop_back();
+                siz--;
+            }
+            m[key]=value;
+            lru.push_front(key);
+            keyPosition[key]=lru.begin();
+            siz++;
+        }
+    }
+};
